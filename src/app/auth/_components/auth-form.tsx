@@ -14,8 +14,8 @@ import { Label } from "@/components/ui/label";
 // import { AlertCircle, Loader2 } from "lucide-react";
 // import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
 import { toast } from "@/hooks/use-toast";
+import { signIn } from "next-auth/react";
 
 export const AuthForm = () => {
   const form = useForm();
