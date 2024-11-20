@@ -25,10 +25,13 @@ export const AuthForm = () => {
       await signIn("email", { email: data.email, redirect: false });
       toast({
         title: "Magic link sent",
-        description: "Check your email for the magic link to login",
+        description: "Check your email for the magic link to login.",
       });
     } catch (err) {
-      console.log(err);
+      toast({
+        title: "Error message",
+        description: `"An error occurred: ${err}. Please try again`,
+      });
     }
   });
 

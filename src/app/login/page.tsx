@@ -1,7 +1,12 @@
-const Login = () => {
+import { auth } from "@/services/auth";
+import UserInfo from "./_components/UserInfo";
+
+const Login = async () => {
+  const session = await auth();
+
   return (
     <div className="flex h-screen items-center justify-center">
-      <h1 className="text-6xl font-bold">Seja bem vindo :3 </h1>
+      <UserInfo user={session?.user} />
     </div>
   );
 };
