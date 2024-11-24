@@ -1,5 +1,21 @@
+import {
+  DashboardPage,
+  DashboardPageHeader,
+  DashboardPageHeaderTitle,
+  DashboardPageMain,
+} from "@/components/dashboard";
+
 const Settings = () => {
-  return <h1 className="">Settigs</h1>;
+  return (
+    <DashboardPage>
+      <DashboardPageHeader>
+        <DashboardPageHeaderTitle>Configurações</DashboardPageHeaderTitle>
+      </DashboardPageHeader>
+      <DashboardPageMain>
+        <h1>Configurações</h1>
+      </DashboardPageMain>
+    </DashboardPage>
+  );
 };
 
 export default Settings;

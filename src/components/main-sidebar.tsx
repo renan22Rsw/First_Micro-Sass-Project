@@ -16,8 +16,13 @@ import {
 import { HomeIcon, MixerVerticalIcon } from "@radix-ui/react-icons";
 import UserDropDown from "./user-dropdown";
 import Logo from "./logo";
+import { Session } from "next-auth";
 
-export const MainSideBar = () => {
+interface MainSideBarProps {
+  user: Session["user"];
+}
+
+export const MainSideBar = ({ user }: MainSideBarProps) => {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
@@ -40,7 +45,7 @@ export const MainSideBar = () => {
               active={isActive("/login/settings")}
               href="/login/settings"
             >
-              <MixerVerticalIcon className="mr-5 h-3 w-5" />
+              <MixerVerticalIcon className="mr-3 h-3 w-5" />
               Configurações
             </SideBarNavLink>
           </SideBarNavMain>
@@ -57,7 +62,7 @@ export const MainSideBar = () => {
         </SideBarNav>
       </SideBarMain>
       <SideBarFooter>
-        <UserDropDown />
+        <UserDropDown user={user} />
       </SideBarFooter>
     </SideBar>
   );

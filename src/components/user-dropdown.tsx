@@ -11,8 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MixerVerticalIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { RocketIcon } from "lucide-react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 
-const UserDropDown = () => {
+interface UserDropDownProps {
+  user: Session["user"];
+}
+
+const UserDropDown = ({ user }: UserDropDownProps) => {
+  if (!user) return;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,14 +29,16 @@ const UserDropDown = () => {
           className="relative flex h-8 w-full items-center justify-between !px-0"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage src={user.image as string} alt={user.name as string} />
+            <AvatarFallback>U</AvatarFallback>
           </Avatar>
 
           <div className="flex flex-1 flex-col space-x-2 space-y-1 text-left">
-            <p className="text-sm font-medium leading-none">shadcn</p>
+            {user.name && (
+              <p className="text-sm font-medium leading-none">{user.name}</p>
+            )}
             <p className="text-xs leading-none text-muted-foreground">
-              m@example.com
+              {user.email}
             </p>
           </div>
         </Button>
@@ -36,9 +46,9 @@ const UserDropDown = () => {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">shadcn</p>
+            <p className="text-sm font-medium leading-none">{user.name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              m@example.com
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -55,7 +65,7 @@ const UserDropDown = () => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>
           <LockClosedIcon className="h-3 w-3" />
           Log out
         </DropdownMenuItem>
