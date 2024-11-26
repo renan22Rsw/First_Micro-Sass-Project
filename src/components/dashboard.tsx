@@ -14,7 +14,13 @@ export const DashboardPageHeader = ({
   children,
   className,
 }: DashboardProps) => {
-  return <header className={cn(["p-6", className])}>{children}</header>;
+  return (
+    <header
+      className={cn(["flex items-center justify-between p-6", className])}
+    >
+      {children}
+    </header>
+  );
 };
 
 export const DashboardPageHeaderTitle = ({

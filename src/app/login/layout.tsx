@@ -6,7 +6,7 @@ export const Layout = async ({ children }: PropsWithChildren) => {
   const session = await auth();
 
   return (
-    <div className="grid grid-cols-[16rem_1fr]">
+    <div className="dark grid grid-cols-[16rem_1fr]">
       <MainSideBar user={session?.user} />
       <main>{children}</main>
     </div>
