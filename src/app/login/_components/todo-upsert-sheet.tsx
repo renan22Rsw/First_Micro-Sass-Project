@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Todo } from "./todo-data-table";
+
 import { useRef } from "react";
 import {
   Form,
@@ -26,6 +26,11 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Todo } from "../types";
+import { upsertTodo } from "../actions";
+import { upsertTodoSchema } from "../schema";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 interface TodoUpsertSheetProps {
   children?: React.ReactNode;
@@ -33,21 +38,31 @@ interface TodoUpsertSheetProps {
 }
 
 export const formSchema = z.object({
-  todo: z.string(),
+  title: z.string(),
 });
 
 export const TodoUpsertSheet = ({ children }: TodoUpsertSheetProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(upsertTodoSchema),
     defaultValues: {
-      todo: "",
+      title: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try {
+      await upsertTodo(data);
+      router.refresh();
+      ref.current?.click();
+      toast({
+        title: "A new todo was added",
+      });
+    } catch (err) {
+      console.log("something went wrong!", err);
+    }
   }
 
   return (
@@ -72,7 +87,7 @@ export const TodoUpsertSheet = ({ children }: TodoUpsertSheetProps) => {
 
             <FormField
               control={form.control}
-              name="todo"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Todo</FormLabel>
