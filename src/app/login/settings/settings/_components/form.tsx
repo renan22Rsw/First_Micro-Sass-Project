@@ -14,13 +14,19 @@ import {
   FormItem,
   FormLabel,
   FormControl,
-  FormDescription,
   FormMessage,
   Form,
 } from "@/components/ui/form";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Session } from "next-auth";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ProfileFormProps {
   defaultValues: Session["user"];
@@ -51,46 +57,65 @@ const ProfileForm = ({ defaultValues }: ProfileFormProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="h-screen space-y-8"
-      >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your name..." {...field} />
-              </FormControl>
-              <FormDescription>
-                This is title will be displayed name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Name</CardTitle>
+            <CardDescription>
+              This is title will be displayed name.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your name..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your email..." readOnly {...field} />
-              </FormControl>
-              <FormDescription>
-                Please contact email contact@micro-sass.com to change the email
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <Card>
+          <CardHeader>
+            <CardTitle>Email</CardTitle>
+            <CardDescription>
+              Please contact email contact@micro-sass.com to change the email
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your email..."
+                      readOnly
+                      {...field}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
 
         <SheetFooter className="mt-auto">
-          <Button type="submit">Save changes</Button>
+          <Button disabled={form.formState.isLoading} type="submit">
+            {form.formState.isSubmitting && "Saving...."}
+            {!form.formState.isSubmitting && "Save changes"}
+          </Button>
         </SheetFooter>
       </form>
     </Form>

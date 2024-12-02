@@ -15,9 +15,11 @@ const layout = ({ children }: PropsWithChildren) => {
         <DashboardPageHeaderTitle>Configurações</DashboardPageHeaderTitle>
       </DashboardPageHeader>
       <DashboardPageMain>
-        <div className="grid grid-cols-[16rem_1fr] gap-12">
-          <SettingsSideBar />
-          <div>{children}</div>
+        <div className="container max-w-screen-lg">
+          <div className="grid grid-cols-[16rem_1fr] gap-12">
+            <SettingsSideBar />
+            <div>{children}</div>
+          </div>
         </div>
       </DashboardPageMain>
     </DashboardPage>
