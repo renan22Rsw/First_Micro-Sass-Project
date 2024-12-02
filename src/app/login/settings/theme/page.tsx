@@ -1,5 +1,7 @@
+import ThemeForm from "./_components/form";
+
 const Theme = () => {
-  return <div>Theme</div>;
+  return <ThemeForm />;
 };
 
 export default Theme;
