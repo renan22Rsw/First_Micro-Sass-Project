@@ -34,7 +34,7 @@ const ThemeForm = () => {
   async function onSubmit(data: z.infer<typeof themeFormSchema>) {
     theme.setTheme(data.theme);
     toast({
-      title: "Your profile has been updated",
+      title: "The theme has been updated",
     });
   }
 
